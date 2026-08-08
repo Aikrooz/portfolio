@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Analyst Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F5F2;
+    --ink:#171A1C;
+    --ink-soft:#4B4F52;
+    --teal:#2F6F5E;
+    --teal-dark:#1E4A3E;
+    --teal-pale:#E7F0EC;
+    --mustard:#D9A441;
+    --line: rgba(23,26,28,0.10);
+    --card-bg:#FFFFFF;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+  }
+  a{color:inherit;}
+  section{ position:relative; z-index:1; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 40px; }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:10;
+    background:rgba(245,245,242,0.9);
+    backdrop-filter: blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 40px;
+  }
+  .logo{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700; font-size:17px;
+  }
+  .nav-links{ display:flex; gap:32px; list-style:none; }
+  .nav-links a{
+    font-size:14px; text-decoration:none; color:var(--ink-soft);
+    font-family:'Inter', sans-serif;
+  }
+  .nav-links a:hover{ color:var(--teal-dark); }
+
+  /* ---------- HERO ---------- */
+  .grid-bg{
+    position:absolute; inset:0; height:100%;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    pointer-events:none; z-index:0;
+    mask-image: linear-gradient(to bottom, black 0%, transparent 90%);
+  }
+  .hero{
+    padding: 8vh 0 9vh;
+    display:grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap:60px;
+    align-items:center;
+    overflow:hidden;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px; letter-spacing:0.04em; color:var(--teal-dark);
+    display:flex; align-items:center; gap:10px; margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:""; width:8px; height:8px; background:var(--teal);
+    display:inline-block; animation: blink 1.6s step-start infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0.15; } }
+  h1{
+    font-family:'Space Grotesk', sans-serif; font-weight:700;
+    font-size:clamp(38px, 5vw, 62px); line-height:1.05; letter-spacing:-0.01em;
+    margin-bottom:20px;
+  }
+  h1 span{ color:var(--teal); }
+  .value-prop{ font-size:19px; line-height:1.55; color:var(--ink-soft); max-width:520px; margin-bottom:32px; }
+  .stack{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:36px; }
+  .stack span{
+    font-family:'JetBrains Mono', monospace; font-size:13px; padding:7px 14px;
+    border:1px solid var(--line); border-radius:4px; background:var(--card-bg); color:var(--ink-soft);
+  }
+  .cta-row{ display:flex; gap:16px; align-items:center; flex-wrap:wrap; }
+  .btn-primary{
+    font-family:'Inter', sans-serif; font-weight:500; font-size:15px;
+    padding:14px 26px; background:var(--teal); color:#F5F5F2; border:none;
+    border-radius:4px; cursor:pointer; text-decoration:none; display:inline-block;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .btn-primary:hover{ background:var(--teal-dark); transform:translateY(-1px); }
+  .btn-ghost{
+    font-family:'Inter', sans-serif; font-weight:500; font-size:15px;
+    text-decoration:none; border-bottom:1px solid var(--ink); padding-bottom:2px;
+  }
+
+  .query-card{
+    background:var(--card-bg); border:1px solid var(--line); border-radius:8px;
+    overflow:hidden; box-shadow: 0 20px 50px -20px rgba(23,26,28,0.18);
+  }
+  .query-card__bar{
+    display:flex; align-items:center; gap:8px; padding:12px 16px;
+    border-bottom:1px solid var(--line); font-family:'JetBrains Mono', monospace;
+    font-size:12px; color:var(--ink-soft);
+  }
+  .query-card__bar .dot{ width:8px; height:8px; border-radius:50%; background:var(--line); }
+  .query-card__query{
+    padding:18px 16px; font-family:'JetBrains Mono', monospace; font-size:13px;
+    line-height:1.7; color:var(--ink-soft); border-bottom:1px solid var(--line);
+  }
+  .query-card__query .kw{ color:var(--teal-dark); font-weight:500; }
+  .query-card__query .cursor{
+    display:inline-block; width:7px; height:14px; background:var(--teal);
+    vertical-align:middle; margin-left:2px; animation: blink 1s step-start infinite;
+  }
+  table.result{ width:100%; border-collapse:collapse; font-family:'JetBrains Mono', monospace; font-size:12.5px; }
+  table.result th{
+    text-align:left; padding:10px 16px; color:var(--ink-soft); font-weight:400;
+    border-bottom:1px solid var(--line); font-size:11px; text-transform:uppercase; letter-spacing:0.04em;
+  }
+  table.result td{ padding:10px 16px; border-bottom:1px solid var(--line); }
+  table.result tr:last-child td{ border-bottom:none; }
+  table.result td.up{ color:var(--teal-dark); }
+  .trend{ font-size:11px; margin-left:6px; }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section-pad{ padding:8vh 0; border-top:1px solid var(--line); }
+  .section-head{ display:flex; align-items:baseline; gap:16px; margin-bottom:44px; }
+  .section-num{ font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--teal-dark); }
+  h2{ font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:32px; }
+
+  /* ---------- ABOUT ---------- */
+  .about{ display:grid; grid-template-columns: 220px 1fr; gap:48px; align-items:start; }
+  .about-photo{
+    width:220px; height:220px; border-radius:8px; background:var(--teal-pale);
+    display:flex; align-items:center; justify-content:center; overflow:hidden;
+    border:1px solid var(--line); color:var(--teal-dark); font-family:'JetBrains Mono', monospace; font-size:13px; text-align:center;
+  }
+  .about-photo img{ width:100%; height:100%; object-fit:cover; }
+  .about-text p{ font-size:17px; line-height:1.7; color:var(--ink-soft); max-width:640px; margin-bottom:16px; }
+  .about-text strong{ color:var(--ink); font-weight:500; }
+
+  /* ---------- PROJECTS ---------- */
+  .projects-grid{ display:flex; flex-direction:column; gap:28px; }
+  .project-card{
+    background:var(--card-bg); border:1px solid var(--line); border-radius:10px;
+    overflow:hidden; display:grid; grid-template-columns: 340px 1fr;
+  }
+  .project-thumb{
+    background:var(--teal-pale); min-height:220px; display:flex; align-items:center; justify-content:center;
+    color:var(--teal-dark); font-family:'JetBrains Mono', monospace; font-size:13px; text-align:center; padding:20px;
+  }
+  .project-thumb img{ width:100%; height:100%; object-fit:cover; }
+  .project-body{ padding:28px 32px; display:flex; flex-direction:column; }
+  .project-title{ font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:22px; margin-bottom:8px; }
+  .project-desc{ font-size:15.5px; line-height:1.65; color:var(--ink-soft); margin-bottom:16px; }
+  .project-tools{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
+  .project-tools span{
+    font-family:'JetBrains Mono', monospace; font-size:12px; padding:5px 10px;
+    background:var(--paper); border:1px solid var(--line); border-radius:4px; color:var(--ink-soft);
+  }
+  .project-links{ display:flex; gap:20px; margin-top:auto; }
+  .project-links a{ font-size:14px; font-weight:500; text-decoration:none; color:var(--teal-dark); border-bottom:1px solid var(--teal-dark); padding-bottom:1px; }
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:24px; }
+  .skill-group h3{ font-family:'JetBrains Mono', monospace; font-size:13px; text-transform:uppercase; letter-spacing:0.04em; color:var(--teal-dark); margin-bottom:14px; }
+  .skill-group ul{ list-style:none; }
+  .skill-group li{ font-size:15px; color:var(--ink-soft); padding:7px 0; border-bottom:1px solid var(--line); }
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  .contact{ text-align:left; }
+  .contact p{ font-size:18px; color:var(--ink-soft); max-width:520px; margin-bottom:28px; }
+  .contact-links{ display:flex; gap:14px; flex-wrap:wrap; }
+  .contact-links a{
+    font-family:'JetBrains Mono', monospace; font-size:13px; padding:10px 18px;
+    border:1px solid var(--line); border-radius:4px; text-decoration:none; color:var(--ink);
+    background:var(--card-bg);
+  }
+  .contact-links a:hover{ border-color:var(--teal); color:var(--teal-dark); }
+  footer{ padding:32px 0; border-top:1px solid var(--line); }
+  footer .wrap{ font-size:13px; color:var(--ink-soft); font-family:'JetBrains Mono', monospace; }
+
+  @media (max-width: 860px){
+    .wrap{ padding:0 22px; }
+    nav .wrap{ padding:16px 22px; }
+    .hero{ grid-template-columns:1fr; padding:6vh 0 6vh; }
+    .query-card{ order:-1; }
+    .about{ grid-template-columns:1fr; }
+    .project-card{ grid-template-columns:1fr; }
+    .project-thumb{ min-height:180px; }
+    .skills-grid{ grid-template-columns:1fr; }
+    .nav-links{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<!--
+  ============================================================
+  HOW TO EDIT THIS TEMPLATE
+  ============================================================
+  Everything you need to change lives in ONE place: the DATA
+  object inside the <script> tag near the bottom of this file.
+  Fill in your name, summary, links, and projects there —
+  you don't need to touch the HTML or CSS above at all.
+
+  For images: paste a direct image URL (e.g. one uploaded to
+  imgur, GitHub, or your own site) into the "image" fields.
+  If you leave an image field empty, a neat placeholder box
+  will show instead so the layout still looks good.
+  ============================================================
+-->
+
+<nav>
+  <div class="wrap">
+    <div class="logo" id="nav-logo">Panguru Aaronjames Kashim</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero wrap">
+  <div class="grid-bg"></div>
+  <div>
+    <div class="eyebrow" id="hero-eyebrow">DATA ANALYST</div>
+    <h1 id="hero-name">Panguru Aaronjames Kashim</h1>
+    <p class="value-prop" id="hero-summary">Numbers talk. I translate.</p>
+    <div class="stack" id="hero-stack"></div>
+    <div class="cta-row">
+      <a href="#projects" class="btn-primary">View projects</a>
+      <a href="#" id="resume-link" class="btn-ghost" target="_blank">Download resume</a>
+    </div>
+  </div>
+  <div class="query-card">
+    <div class="query-card__bar">
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <span style="margin-left:6px;">query_results.sql</span>
+    </div>
+    <div class="query-card__query">
+      <span class="kw">SELECT</span> region, revenue<br>
+      <span class="kw">FROM</span> q3_sales<br>
+      <span class="kw">ORDER BY</span> revenue <span class="kw">DESC</span><span class="cursor"></span>
+    </div>
+    <table class="result">
+      <tr><th>Region</th><th>Revenue</th><th></th></tr>
+      <tr><td>West</td><td class="up">$482K</td><td class="trend">▲ 12%</td></tr>
+      <tr><td>East</td><td>$401K</td><td class="trend">▲ 3%</td></tr>
+      <tr><td>South</td><td>$317K</td><td class="trend">▼ 4%</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="section-pad" id="about">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num">01</span><h2>About</h2></div>
+    <div class="about">
+      <div class="about-photo" id="about-photo">Add your<br>photo here</div>
+      <div class="about-text" id="about-text"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" id="projects">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num">02</span><h2>Projects</h2></div>
+    <div class="projects-grid" id="projects-grid"></div>
+  </div>
+</section>
+
+<section class="section-pad" id="skills">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num">03</span><h2>Skills</h2></div>
+    <div class="skills-grid" id="skills-grid"></div>
+  </div>
+</section>
+
+<section class="section-pad contact" id="contact">
+  <div class="wrap">
+    <div class="section-head"><span class="section-num">04</span><h2>Get in touch</h2></div>
+    <p id="contact-line">Open to opportunities  reach out through any of the links below.</p>
+    <div class="contact-links" id="contact-links"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" id="footer-line">© 2026 Your Name</div>
+</footer>
+
+<script>
+/* ============================================================
+   EDIT EVERYTHING BELOW THIS LINE
+   ============================================================ */
+const DATA = {
+
+  name: "Panguru Aaronjames Kashim",
+  title: "Data Analyst",
+  toolsShort: ["SQL", "Python", "Excel", "Tableau","Sklearn","Seaborn","Matplotlib"],   // shown as tags in the hero
+
+  // One-sentence pitch shown under your name
+  summary: "I ask the right questions so your data can answer them.",
+
+  // Link to your resume PDF (upload it somewhere and paste the direct link)
+  resumeUrl: "Resume.pdf",
+
+  // ---------------- ABOUT ----------------
+  photoUrl: "1780866850047.png",   // direct image URL for your headshot, or leave "" for a placeholder
+  about: [
+    "I got tired of generic football stats that never told the full story",
+    "so I started digging on my own. Pulling World Cup match data, I discovered something that stats alone never captured: Spain wasn't just playing tiki-taka, they'd evolved it into something more direct and lethal.",
+    " Digging deeper, I found the real differentiator wasn't possession at all it was which teams pressed smartly and which ones just chased the ball."
+
+    
+  ],
+
+  // ---------------- PROJECTS ----------------
+  // Add, remove, or edit as many projects as you like.
+  projects: [
+    {
+      title: "Project title",
+      image: "Screenshot 2026-07-26 214729.png",     // direct image URL of a chart/dashboard screenshot, or leave "" for placeholder
+      description: "Analyzed World Cup team statistics using PCA and K-Means clustering to uncover hidden differences in playing styles. The analysis revealed Spain as a clear outlier, driven by its combination of high possession, strong xG, line-breaking actions, and aggressive pressing.",
+      tools: ["SQL", "Python","Sklaern","Matplotlib","Seaborn"],
+      liveUrl: "",     // link to live dashboard / demo, or leave ""
+      codeUrl: "https://github.com/Aikrooz/worldcup_analysis"      // link to GitHub repo, or leave ""
+    },
+    {
+      title: "Furniture Sales Dashboard",
+      image: "Sales Dasboard.png",
+      description: "I analyzed 2023 sales data across regions, categories, and states to understand what's driving profit growth  and found that a reported 9.95% YoY profit increase was masking sharp declines in the Central (-71%) and South (-49%) regions and in Furniture (-61.73%), with growth entirely carried by West (+111.26%) and Technology (+11.47%).",
+      tools: ["Tableau","Analysis","Data cleaning","Visualization"],
+      liveUrl: "https://public.tableau.com/app/profile/aaronjames.kashim/viz/SalesDashboard_VOTD_v2026_1/SalesDasboard?publish=yes",
+      codeUrl: ""
+    },
+    {
+      title: "Data Job Specification Trend",
+      image: "images.png",
+      description: "I used SQL (PostgreSQL) to analyze thousands of 2023 data analyst job postings  including salaries, locations, and required skills  to identify which skills are most in-demand versus which command the highest pay, and found that while SQL, Python, and Excel dominate demand, specialized skills like PySpark ($208K avg) and Bitbucket ($189K avg) pay significantly more, with SQL and Python standing out as the rare combination of both high demand and high salary.",
+      tools: ["SQL", "MySQL", "Excel", "Git/GitHub", "VS Code"],
+      liveUrl: "",
+      codeUrl: "https://github.com/Aikrooz/Data-Jobs"
+    }
+  ],
+
+  // ---------------- SKILLS ----------------
+  skills: [
+    { group: "Languages", items: ["SQL", "Python", "Excel formulas"] },
+    { group: "Tools", items: ["Tableau", "Power BI", "Google Sheets","Vscode",] },
+    { group: "Concepts", items: ["A/B testing", "Data cleaning", "Forecasting","Supervised and Unsupervised learning","Analysis"] }
+  ],
+
+  // ---------------- CONTACT ----------------
+  contactLine: "Open to opportunities  reach out through any of the links below.",
+  links: [
+    { label: "Email", url: "aaronjameskashim@gmail.com" },
+    { label: "LinkedIn", url: "www.linkedin.com/in/aaronjameskashim" },
+    { label: "GitHub", url: "https://github.com/Aikrooz" },
+    
+  ]
+};
+
+/* ============================================================
+   RENDER LOGIC — you don't need to edit anything below this
+   ============================================================ */
+document.getElementById('nav-logo').textContent = DATA.name;
+document.getElementById('hero-eyebrow').textContent = `${DATA.title.toUpperCase()} — ${DATA.toolsShort.join(' / ').toUpperCase()}`;
+document.getElementById('hero-name').textContent = DATA.name;
+document.getElementById('hero-summary').textContent = DATA.summary;
+document.getElementById('footer-line').textContent = `© ${new Date().getFullYear()} ${DATA.name}`;
+document.getElementById('contact-line').textContent = DATA.contactLine;
+
+const resumeLink = document.getElementById('resume-link');
+if (DATA.resumeUrl) {
+  resumeLink.href = DATA.resumeUrl;
+  resumeLink.setAttribute('download', DATA.resumeUrl.split('/').pop());
+} else {
+  resumeLink.style.display = 'none';
+}
+
+const heroStack = document.getElementById('hero-stack');
+DATA.toolsShort.forEach(t => {
+  const s = document.createElement('span');
+  s.textContent = t;
+  heroStack.appendChild(s);
+});
+
+const aboutPhoto = document.getElementById('about-photo');
+if (DATA.photoUrl) { aboutPhoto.innerHTML = `<img src="${DATA.photoUrl}" alt="${DATA.name}">`; }
+
+const aboutText = document.getElementById('about-text');
+DATA.about.forEach(p => {
+  const el = document.createElement('p');
+  el.textContent = p;
+  aboutText.appendChild(el);
+});
+
+const projectsGrid = document.getElementById('projects-grid');
+DATA.projects.forEach(p => {
+  const card = document.createElement('div');
+  card.className = 'project-card';
+
+  const thumb = document.createElement('div');
+  thumb.className = 'project-thumb';
+  thumb.innerHTML = p.image ? `<img src="${p.image}" alt="${p.title}">` : 'Add a project<br>screenshot here';
+
+  const body = document.createElement('div');
+  body.className = 'project-body';
+
+  const toolsHtml = p.tools.map(t => `<span>${t}</span>`).join('');
+  let linksHtml = '';
+  if (p.liveUrl) linksHtml += `<a href="${p.liveUrl}" target="_blank">View live →</a>`;
+  if (p.codeUrl) linksHtml += `<a href="${p.codeUrl}" target="_blank">View code →</a>`;
+
+  body.innerHTML = `
+    <div class="project-title">${p.title}</div>
+    <div class="project-desc">${p.description}</div>
+    <div class="project-tools">${toolsHtml}</div>
+    <div class="project-links">${linksHtml}</div>
+  `;
+
+  card.appendChild(thumb);
+  card.appendChild(body);
+  projectsGrid.appendChild(card);
+});
+
+const skillsGrid = document.getElementById('skills-grid');
+DATA.skills.forEach(g => {
+  const div = document.createElement('div');
+  div.className = 'skill-group';
+  div.innerHTML = `<h3>${g.group}</h3><ul>${g.items.map(i => `<li>${i}</li>`).join('')}</ul>`;
+  skillsGrid.appendChild(div);
+});
+
+const contactLinks = document.getElementById('contact-links');
+DATA.links.forEach(l => {
+  if (!l.url) return;
+  const a = document.createElement('a');
+  a.href = l.url;
+  a.target = '_blank';
+  a.textContent = l.label;
+  contactLinks.appendChild(a);
+});
+</script>
+
+</body>
+</html>
